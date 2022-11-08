@@ -2,11 +2,53 @@ openapi: "3.0.2"
 info:
   title: API Title
   version: "1.0"
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+
 servers:
-  - url: https://api.server.test/v1
+  - url: /api
 paths:
-  /test:
+  /customers/{id}:
     get:
+      tags:
+        - Customer
+      summary: コメントの単一取得
+      description: コメント ID に該当するコメントを取得します
+      operationId: GetCustomerById
+      parameters:
+        - name: id
+          in: path
+          description: コメント ID
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SingleCustomerReponse'
+components:
+  schemas:
+    SingleCustomerReponse:
+      required:
+        - customer
+      type: object
+      properties:
+        customer:
+          $ref: '#/components/schemas/Customer'
+    Customer:
+      required:
+        - id
+        - firstName
+        - lastName
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
