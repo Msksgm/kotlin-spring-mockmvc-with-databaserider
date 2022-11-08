@@ -1,0 +1,46 @@
+# style のルール
+style:
+  active: true
+  #
+  # UnusedImports
+  #
+  # 概要
+  # - 未使用の import を禁止する
+  #
+  UnusedImports:
+    active: true # (default: false)
+
+# コメントのルール
+comments:
+  active: true
+  #
+  # UndocumentedPublicClass
+  #
+  # 概要
+  # - public な class、object、interface にコメントの記述を必須にする
+  #
+  UndocumentedPublicClass:
+    active: true # (default: false)
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+    searchInNestedClass: true
+    searchInInnerClass: true
+    searchInInnerObject: true
+    searchInInnerInterface: true
+  #
+  # UndocumentedPublicFunction
+  #
+  # 概要
+  # - public な関数にコメントの記述を必須にする
+  #
+  UndocumentedPublicFunction:
+    active: true # (default: false)
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+  #
+  # UndocumentedPublicProperty
+  #
+  # 概要
+  # - public なプロパティにコメントの記述を必須にする
+  #
+  UndocumentedPublicProperty:
+    active: true # (default: false)
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']

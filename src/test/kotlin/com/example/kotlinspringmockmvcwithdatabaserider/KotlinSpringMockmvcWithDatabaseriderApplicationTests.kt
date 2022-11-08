@@ -6,8 +6,8 @@ import org.springframework.boot.test.context.SpringBootTest
 @SpringBootTest
 class KotlinSpringMockmvcWithDatabaseriderApplicationTests {
 
-	@Test
-	fun contextLoads() {
-	}
-
+    @Test
+    @Suppress("EmptyFunctionBlock")
+    fun contextLoads() {
+    }
 }

@@ -4,8 +4,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
+@Suppress("UndocumentedPublicClass")
 class KotlinSpringMockmvcWithDatabaseriderApplication
 
+@Suppress("UndocumentedPublicFunction")
 fun main(args: Array<String>) {
-	runApplication<KotlinSpringMockmvcWithDatabaseriderApplication>(*args)
+    @Suppress("SpreadOperator")
+    runApplication<KotlinSpringMockmvcWithDatabaseriderApplication>(*args)
 }
