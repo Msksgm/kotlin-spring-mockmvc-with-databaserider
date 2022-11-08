@@ -143,7 +143,7 @@ task<GenerateTask>("generateApiDoc") {
      * https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/README.md
      */
     generatorName.set("html2")
-    inputSpec.set("$projectDir/openapi.yaml")
+    inputSpec.set("$projectDir/doc/openapi.yaml")
     outputDir.set("$buildDir/openapi/doc/")
 }
 
@@ -153,7 +153,7 @@ task<GenerateTask>("generateApiDoc") {
  */
 task<GenerateTask>("generateApiServer") {
     generatorName.set("kotlin-spring")
-    inputSpec.set("$projectDir/openapi.yaml")
+    inputSpec.set("$projectDir/doc/openapi.yaml")
     outputDir.set("$buildDir/openapi/server-code/") // .gitignoreされているので注意(わざとここにあります)
     apiPackage.set("com.example.realworldkotlinspringbootjdbc.openapi.generated.controller")
     modelPackage.set("com.example.realworldkotlinspringbootjdbc.openapi.generated.model")
