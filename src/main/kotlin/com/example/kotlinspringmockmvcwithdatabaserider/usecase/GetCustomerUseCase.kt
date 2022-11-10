@@ -1,7 +1,7 @@
 package com.example.kotlinspringmockmvcwithdatabaserider.usecase
 
+import com.example.kotlinspringmockmvcwithdatabaserider.domain.CustomerRepository
 import com.example.kotlinspringmockmvcwithdatabaserider.entity.Customer
-import com.example.kotlinspringmockmvcwithdatabaserider.infra.CustomerRepositoryImpl
 import org.springframework.stereotype.Service
 
 /**
@@ -21,11 +21,11 @@ interface GetCustomerUseCase {
 /**
  * Customer 単一取得ユースケースの実クラス
  *
- * @property customerRepositoryImpl
+ * @property customerRepository
  */
 @Service
-class GetCustomerUseCaseImpl(val customerRepositoryImpl: CustomerRepositoryImpl) : GetCustomerUseCase {
+class GetCustomerUseCaseImpl(val customerRepository: CustomerRepository) : GetCustomerUseCase {
     override fun execute(id: Int): Customer {
-        return customerRepositoryImpl.getCustomer(id)!!
+        return customerRepository.getCustomer(id)
     }
 }
