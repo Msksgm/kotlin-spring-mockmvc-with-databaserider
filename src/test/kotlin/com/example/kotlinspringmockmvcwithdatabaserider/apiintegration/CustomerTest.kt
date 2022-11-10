@@ -72,5 +72,49 @@ class CustomerTest {
                 JSONCompareMode.STRICT
             )
         }
+
+        @Test
+        @DataSet("datasets/yml/given/common.yml")
+        @ExpectedDataSet(
+            value = ["datasets/yml/given/common.yml"],
+            orderBy = ["id"]
+        )
+        fun `異常系 Customer の単一取得時に、パスパラメータの id のユーザーがいない`() {
+            /**
+             * given:
+             * - 存在しないユーザー ID
+             */
+            val id = 3
+
+            /**
+             * when:
+             */
+            val response = mockMvc.perform(
+                MockMvcRequestBuilders
+                    .get("/api/customers/$id")
+                    .contentType(MediaType.APPLICATION_JSON)
+            ).andReturn().response
+            val actualStatus = response.status
+            val actualResponseBody = response.contentAsString
+
+            /**
+             * then:
+             * - ステータスコードが一致する
+             * - レスポンスボディが一致する
+             */
+            val expectedStatus = HttpStatus.NOT_FOUND.value()
+            val expectedResponseBody =
+                """
+                    {
+                      "errors": {"body":  ["カスタマーが見つかりませんでした"]}
+                    }
+                """.trimIndent()
+            Assertions.assertThat(actualStatus).isEqualTo(expectedStatus)
+            JSONAssert.assertEquals(
+                expectedResponseBody,
+                actualResponseBody,
+                JSONCompareMode.STRICT
+            )
+        }
     }
 }

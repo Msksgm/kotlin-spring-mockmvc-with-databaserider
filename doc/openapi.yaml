@@ -30,6 +30,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SingleCustomerReponse'
+        '404':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericErrorModel'
 components:
   schemas:
     SingleCustomerReponse:
@@ -52,3 +58,17 @@ components:
           type: string
         lastName:
           type: string
+    GenericErrorModel:
+      required:
+        - errors
+      type: object
+      properties:
+        errors:
+          required:
+            - body
+          type: object
+          properties:
+            body:
+              type: array
+              items:
+                type: string
