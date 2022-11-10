@@ -36,6 +36,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericErrorModel'
+  /customers:
+    post:
+      tags:
+        - Customer
+      summary: カスタマーの登録
+      description: カスタマーを登録します
+      operationId: RegisterCustomer
+      requestBody:
+        description: 登録したいカスタマーの情報
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCustomerRequest'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SingleCustomerReponse'
+      x-codegen-request-body-name: customer
 components:
   schemas:
     SingleCustomerReponse:
@@ -58,6 +80,24 @@ components:
           type: string
         lastName:
           type: string
+    NewCustomer:
+      required:
+        - body
+        - firstName
+        - lastName
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+    NewCustomerRequest:
+      required:
+        - customer
+      type: object
+      properties:
+        customer:
+          $ref: '#/components/schemas/NewCustomer'
     GenericErrorModel:
       required:
         - errors
