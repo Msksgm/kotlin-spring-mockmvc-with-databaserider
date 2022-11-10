@@ -14,4 +14,13 @@ interface CustomerRepository {
      * @return
      */
     fun getCustomer(id: Int): Customer = throw NotImplementedError()
+
+    /**
+     * Customer の登録メソッド
+     *
+     * @param firstName
+     * @param lastName
+     * @return
+     */
+    fun registerCustomer(firstName: String, lastName: String): Customer = throw NotImplementedError()
 }

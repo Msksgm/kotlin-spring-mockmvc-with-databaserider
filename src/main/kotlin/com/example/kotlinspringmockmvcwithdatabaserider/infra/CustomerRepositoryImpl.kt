@@ -16,4 +16,9 @@ class CustomerRepositoryImpl(val springDataCustomerRepository: SpringDataCustome
     override fun getCustomer(id: Int): Customer {
         return springDataCustomerRepository.findById(id).orElse(null) ?: throw NotFoundException("Customer が見つかりませんでした")
     }
+
+    override fun registerCustomer(firstName: String, lastName: String): Customer {
+        val customer = Customer(id = null, firstName = firstName, lastName = lastName)
+        return springDataCustomerRepository.save(customer)
+    }
 }

@@ -1,0 +1,11 @@
+customer:
+  - id: 1
+    first_name: "Alice"
+    last_name: "Sample1"
+  - id: 2
+    first_name: "Bob"
+    last_name: "Sample2"
+  - id: 1001
+    first_name: "Carol"
+    last_name: "Sample3"
+

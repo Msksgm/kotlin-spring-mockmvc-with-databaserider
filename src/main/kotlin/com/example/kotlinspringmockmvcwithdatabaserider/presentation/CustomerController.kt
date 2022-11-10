@@ -1,11 +1,13 @@
 package com.example.kotlinspringmockmvcwithdatabaserider.presentation
 
 import com.example.kotlinspringmockmvcwithdatabaserider.usecase.GetCustomerUseCase
+import com.example.kotlinspringmockmvcwithdatabaserider.usecase.RegisterCustomerUseCase
 import com.example.realworldkotlinspringbootjdbc.openapi.generated.controller.CustomerApi
 import com.example.realworldkotlinspringbootjdbc.openapi.generated.controller.NotFoundException
 import com.example.realworldkotlinspringbootjdbc.openapi.generated.model.Customer
 import com.example.realworldkotlinspringbootjdbc.openapi.generated.model.GenericErrorModel
 import com.example.realworldkotlinspringbootjdbc.openapi.generated.model.GenericErrorModelErrors
+import com.example.realworldkotlinspringbootjdbc.openapi.generated.model.NewCustomerRequest
 import com.example.realworldkotlinspringbootjdbc.openapi.generated.model.SingleCustomerReponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -16,9 +18,13 @@ import org.springframework.web.bind.annotation.RestController
  * Customer API のルーティングコントローラー
  *
  * @property getCustomerUseCase Customer 単一取得ユースケース
+ * @property registerCustomerUseCase Customer 登録ユースケース
  */
 @RestController
-class CustomerController(val getCustomerUseCase: GetCustomerUseCase) : CustomerApi {
+class CustomerController(
+    val getCustomerUseCase: GetCustomerUseCase,
+    val registerCustomerUseCase: RegisterCustomerUseCase
+) : CustomerApi {
     override fun getCustomerById(id: Int): ResponseEntity<SingleCustomerReponse> {
         try {
             val customer = getCustomerUseCase.execute(id)
@@ -63,5 +69,20 @@ class CustomerController(val getCustomerUseCase: GetCustomerUseCase) : CustomerA
                 HttpStatus.INTERNAL_SERVER_ERROR
             )
         }
+    }
+
+    override fun registerCustomer(customer: NewCustomerRequest): ResponseEntity<SingleCustomerReponse> {
+        val registeredCustomer =
+            registerCustomerUseCase.execute(customer.customer.firstName, customer.customer.lastName)
+        return ResponseEntity(
+            SingleCustomerReponse(
+                customer = Customer(
+                    id = registeredCustomer.id!!,
+                    firstName = registeredCustomer.firstName,
+                    lastName = registeredCustomer.lastName
+                )
+            ),
+            HttpStatus.OK
+        )
     }
 }

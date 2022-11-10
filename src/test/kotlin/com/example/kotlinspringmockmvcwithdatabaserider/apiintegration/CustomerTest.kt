@@ -6,8 +6,10 @@ import com.github.database.rider.junit5.api.DBRider
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.skyscreamer.jsonassert.Customization
 import org.skyscreamer.jsonassert.JSONAssert
 import org.skyscreamer.jsonassert.JSONCompareMode
+import org.skyscreamer.jsonassert.comparator.CustomComparator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -114,6 +116,80 @@ class CustomerTest {
                 expectedResponseBody,
                 actualResponseBody,
                 JSONCompareMode.STRICT
+            )
+        }
+    }
+
+    @SpringBootTest
+    @AutoConfigureMockMvc
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    @DBRider
+    class RegisterCustomer {
+        @Autowired
+        lateinit var mockMvc: MockMvc
+
+        @Test
+        @DataSet("datasets/yml/given/common.yml")
+        @ExpectedDataSet(
+            value = ["datasets/yml/then/insert-success.yml"],
+            orderBy = ["id"],
+            ignoreCols = ["id"]
+        )
+        // @ExportDataSet(
+        //     format = DataSetFormat.YML,
+        //     outputName = "src/test/resources/datasets/yml/then/insert-success.yml",
+        //     includeTables = ["customer"]
+        // )
+        fun `正常系`() {
+            /**
+             * given:
+             */
+            val rawRequestBody = """
+                {
+                    "customer": {
+                        "firstName": "Carol",
+                        "lastName": "Sample3"
+                    }
+                }
+            """.trimIndent()
+
+            /**
+             * when:
+             */
+            val response = mockMvc.perform(
+                MockMvcRequestBuilders
+                    .post("/api/customers")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(rawRequestBody)
+            ).andReturn().response
+
+            val actualStatus = response.status
+            val actualResponseBody = response.contentAsString
+
+            /**
+             * then:
+             * - ステータスコードが一致する
+             * - レスポンスボディが一致する
+             */
+            val expectedStatus = HttpStatus.OK.value()
+            val expectedResponseBody =
+                """
+                    {
+                      "customer": {
+                        id: 1001,
+                        firstName: "Carol",
+                        lastName: "Sample3"
+                      }
+                    }
+                """.trimIndent()
+            Assertions.assertThat(actualStatus).isEqualTo(expectedStatus)
+            JSONAssert.assertEquals(
+                expectedResponseBody,
+                actualResponseBody,
+                CustomComparator(
+                    JSONCompareMode.STRICT,
+                    Customization("customer.id") { _, _ -> true } // id はインサート時に生成されるデータのため、比較しない。比較するのならばシーケンスの設定をいじる必要あり。
+                )
             )
         }
     }
