@@ -2,6 +2,19 @@
 style:
   active: true
   #
+  # MaximumLineLength
+  #
+  # 概要
+  # - 1行当たりの長さ
+  #
+  MaxLineLength:
+    active: true
+    excludes: ['**/test/**'] # (default: なし）
+    maxLineLength: 120
+    excludePackageStatements: true
+    excludeImportStatements: true
+    excludeCommentStatements: false
+  #
   # UnusedImports
   #
   # 概要
@@ -59,3 +72,19 @@ exceptions:
       - 'NullPointerException'
       - 'RuntimeException'
       - 'Throwable'
+
+formatting:
+  active: true
+  android: false
+  autoCorrect: true
+  #
+  # MaximumLineLength
+  #
+  # 概要
+  # - 1行当たりの文字数
+  #
+  MaximumLineLength:
+    active: true
+    excludes: ['**/test/**'] # (default: なし）
+    maxLineLength: 120
+    ignoreBackTickedIdentifier: false
