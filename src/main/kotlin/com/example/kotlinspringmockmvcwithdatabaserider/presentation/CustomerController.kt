@@ -25,7 +25,7 @@ class CustomerController(val getCustomerUseCase: GetCustomerUseCase) : CustomerA
             return ResponseEntity(
                 SingleCustomerReponse(
                     Customer(
-                        id = customer.id,
+                        id = customer.id!!,
                         firstName = customer.firstName,
                         lastName = customer.lastName
                     )
