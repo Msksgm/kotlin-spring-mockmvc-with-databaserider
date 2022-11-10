@@ -132,7 +132,6 @@ class CustomerTest {
         @DataSet("datasets/yml/given/common.yml")
         @ExpectedDataSet(
             value = ["datasets/yml/then/insert-success.yml"],
-            orderBy = ["id"],
             ignoreCols = ["id"]
         )
         // @ExportDataSet(
