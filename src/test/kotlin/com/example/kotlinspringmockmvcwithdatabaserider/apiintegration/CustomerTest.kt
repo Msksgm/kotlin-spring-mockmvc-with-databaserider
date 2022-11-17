@@ -23,10 +23,9 @@ class CustomerTest {
     @AutoConfigureMockMvc
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @DBRider
-    class GetCustomerById {
-        @Autowired
-        lateinit var mockMvc: MockMvc
-
+    class GetCustomerById @Autowired constructor(
+        val mockMvc: MockMvc
+    ) {
         @Test
         @DataSet("datasets/yml/given/common.yml")
         @ExpectedDataSet(
@@ -124,10 +123,9 @@ class CustomerTest {
     @AutoConfigureMockMvc
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @DBRider
-    class RegisterCustomer {
-        @Autowired
-        lateinit var mockMvc: MockMvc
-
+    class RegisterCustomer @Autowired constructor(
+        val mockMvc: MockMvc
+    ) {
         @Test
         @DataSet("datasets/yml/given/common.yml")
         @ExpectedDataSet(
